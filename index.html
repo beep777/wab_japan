@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Travel - แดนอาทิตย์อุทัยที่คุณต้องไปสักครั้ง </title>
+
+    <!-- Google Fonts: Prompt & Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&family=Prompt:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --jp-red: #c9184a;
+            --jp-rose: #ff4d6d;
+            --jp-navy: #1d3557;
+            --jp-blue: #457b9d;
+            --jp-light-bg: #f8fafc;
+            --jp-card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Prompt', 'Noto Sans JP', sans-serif;
+            background-color: var(--jp-light-bg);
+            color: #334155;
+            overflow-x: hidden;
+        }
+
+        .navbar-custom {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+            padding: 16px 0;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: var(--jp-navy);
+            text-decoration: none;
+        }
+
+        .brand-badge {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #c9184a, #ff4d6d);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 10px rgba(201, 24, 74, 0.35);
+        }
+
+
+        .hero-banner {
+            position: relative;
+            overflow: hidden;
+            padding: 130px 0 100px;
+            color: #fff;
+            text-align: center;
+            background: #1d3557;
+        }
+
+        /* ชั้นภาพสไลด์ด้านหลังสุด (z-index: 1) */
+        .hero-slider {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .hero-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            will-change: transform;
+        }
+
+        .hero-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            min-width: 100%;
+        }
+
+        .hero-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* ชั้น Gradient สีทับภาพ: กรมท่า (#1d3557) ถึง ชมพู (#c9184a) เพื่อให้อ่านข้อความง่าย (z-index: 2) */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(180deg,
+                    rgba(29, 53, 87, 0.82) 0%,
+                    rgba(201, 24, 74, 0.75) 100%);
+        }
+
+        /* ให้ข้อความ ปุ่มค้นหา และองค์ประกอบทั้งหมดอยู่เหนือภาพและ overlay (z-index: 3) */
+        .hero-banner > .container {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* ปรับแต่งสไตล์ hero-tag, hero-title และ hero-subtitle */
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.92);
+            max-width: 680px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+            font-weight: 300;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero-banner {
+                padding: 95px 0 70px;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 0.98rem;
+                padding: 0 10px;
+            }
+        }
+
+
+
+        .search-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 8px;
+            border-radius: 50px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .search-container input {
+            border: none;
+            box-shadow: none;
+            padding-left: 20px;
+            font-size: 1rem;
+        }
+
+        .btn-search-hero {
+            background: linear-gradient(135deg, #c9184a, #ff4d6d);
+            border: none;
+            color: white;
+            border-radius: 40px;
+            padding: 10px 28px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .category-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .category-pill:hover,
+        .category-pill.active {
+            background: linear-gradient(135deg, #c9184a, #ff4d6d);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 6px 18px rgba(201, 24, 74, 0.3);
+        }
+
+        .place-card {
+            background: #fff;
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--jp-card-shadow);
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .place-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .place-img-wrapper {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .place-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .place-card:hover .place-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .badge-rating {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(6px);
+            color: #fbbf24;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .badge-cat-pill {
+            position: absolute;
+            bottom: 14px;
+            left: 14px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--jp-navy);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .place-card-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .place-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--jp-navy);
+            margin-bottom: 2px;
+        }
+
+        .place-title-jp {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .place-prefecture {
+            font-size: 0.88rem;
+            color: #64748b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .place-highlight {
+            font-size: 0.9rem;
+            color: #475569;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .btn-view-detail {
+            margin-top: auto;
+            background: #f1f5f9;
+            color: var(--jp-navy);
+            border-radius: 12px;
+            font-weight: 600;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.25s;
+        }
+
+        .btn-view-detail:hover {
+            background: linear-gradient(135deg, #c9184a, #ff4d6d);
+            color: #fff;
+        }
+
+        .feature-box {
+            background: #fff;
+            border-radius: 18px;
+            padding: 30px 22px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+            height: 100%;
+            border: 1px solid #f1f5f9;
+        }
+
+        .feature-icon-wrapper {
+            width: 64px;
+            height: 64px;
+            background: #ffe4e6;
+            color: var(--jp-red);
+            border-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .main-footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 70px 0 30px;
+            margin-top: 80px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="brand-logo" href="index.html">
+                <div class="brand-badge">⛩️</div>
+                <div>
+                    <div>JAPAN TRAVEL</div>
+                    <div class="small fw-normal text-muted" style="font-size: 0.72rem; letter-spacing: 1px;">日本観光ガイド
+                        &bull; เที่ยวญี่ปุ่น </div>
+                </div>
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-2 gap-lg-3 my-3 my-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-danger" href="index.html">
+                            <i class="bi bi-house-door-fill me-1"></i> หน้าแรก
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-dark" href="#places-section">
+                            <i class="bi bi-compass-fill me-1"></i> แหล่งท่องเที่ยว
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-dark" href="#features-section">
+                            <i class="bi bi-info-circle-fill me-1"></i> ไฮไลท์ญี่ปุ่น
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a href="admin/login.php"
+                            class="btn btn-outline-danger rounded-pill px-3 py-2 fw-semibold d-inline-flex align-items-center gap-1 shadow-sm">
+                            <i class="bi bi-lock-fill"></i> เข้าสู่ระบบ (หลังบ้าน)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-banner">
+        <div class="hero-slider" aria-hidden="true">
+            <div class="hero-track" id="heroTrack"></div>
+        </div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+
+        <div class="container">
+            <div class="hero-tag">
+                🌸 DISCOVER THE MAGIC OF JAPAN 2026
+            </div>
+            <h1 class="hero-title">สัมผัสมนต์เสน่ห์แห่งแดนอาทิตย์อุทัย</h1>
+            <p class="hero-subtitle">
+                ค้นพบแหล่งท่องเที่ยวอันน่าทึ่ง ตั้งแต่ยอดเขาฟูจิ วัดโบราณพันปี ย่านช้อปปิ้งสุดล้ำ
+                ไปจนถึงบ่อน้ำพุร้อนออนเซ็นท่ามกลางหิมะ
+            </p>
+
+            <div class="search-container">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-search text-muted fs-5 ms-3"></i>
+                    <input type="text" id="searchInput" class="form-control"
+                        placeholder="ค้นหาชื่อสถานที่, เกียวโต, โตเกียว, ฟูจิ...">
+                    <button type="button" id="searchBtn" class="btn btn-search-hero">
+                        ค้นหา
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-5" id="places-section">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+                <div>
+                    <h3 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                        <i class="bi bi-geo-alt-fill text-danger"></i> จุดหมายปลายทางยอดนิยม
+                    </h3>
+                    <p class="text-muted small mb-0" id="placesCountText">กำลังโหลดข้อมูล...</p>
+                </div>
+                <button id="resetFilterBtn" class="btn btn-sm btn-light border text-danger rounded-pill px-3"
+                    style="display: none;">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i> ล้างการค้นหา
+                </button>
+            </div>
+
+            <div class="d-flex gap-2 overflow-x-auto pb-3 mb-4" id="categoryPillsContainer"
+                style="scrollbar-width: thin;">
+            </div>
+
+            <div class="row g-4" id="placesGrid">
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-white border-top border-bottom" id="features-section">
+        <div class="container py-4">
+            <div class="text-center max-w-700 mx-auto mb-5">
+                <span
+                    class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-semibold mb-2">ทำไมต้องไปเยือนญี่ปุ่น?</span>
+                <h2 class="fw-bold text-dark">ประสบการณ์สุดพิเศษที่คุณจะได้สัมผัส</h2>
+                <p class="text-muted">ประเทศที่ผสมผสานความล้ำหน้าทางเทคโนโลยีและวัฒนธรรมโบราณได้อย่างลงตัวไร้ที่ติ</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="feature-box">
+                        <div class="feature-icon-wrapper">🌸</div>
+                        <h5 class="fw-bold text-dark">4 ฤดูกาลอันงดงาม</h5>
+                        <p class="text-muted small mb-0">ชมซากุระบานสะพรั่งในฤดูใบไม้ผลิ ใบไม้เปลี่ยนสี
+                            และทุ่งหิมะในฤดูหนาว</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="feature-box">
+                        <div class="feature-icon-wrapper">🍣</div>
+                        <h5 class="fw-bold text-dark">อาหารเลิศรส</h5>
+                        <p class="text-muted small mb-0">ลิ้มลองซูชิสดใหม่ ราเมนสูตรต้นตำรับ เนื้อวากิว
+                            และสตรีทฟู้ดแสนอร่อย</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="feature-box">
+                        <div class="feature-icon-wrapper">🚅</div>
+                        <h5 class="fw-bold text-dark">ชินคันเซ็นรวดเร็ว</h5>
+                        <p class="text-muted small mb-0">เดินทางทั่วประเทศด้วยรถไฟความเร็วสูง ตรงเวลา ปลอดภัย
+                            เชื่อมต่อทุกเมือง</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="feature-box">
+                        <div class="feature-icon-wrapper">♨️</div>
+                        <h5 class="fw-bold text-dark">ออนเซ็นผ่อนคลาย</h5>
+                        <p class="text-muted small mb-0">แช่น้ำแร่ธรรมชาติบริสุทธิ์
+                            พักผ่อนในเรียวกังไม้สไตล์ดั้งเดิมกลางขุนเขา</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="fs-3">⛩️</span>
+                        <h4 class="fw-bold text-white mb-0">JAPAN TRAVEL</h4>
+                    </div>
+                    <p class="text-secondary pe-lg-4">
+                        เว็บไซต์แนะนำแหล่งท่องเที่ยวชั้นนำในประเทศญี่ปุ่น สามารถดับเบิลคลิกเปิดดูได้ทันที
+                    </p>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <a href="admin/login.php" class="btn btn-danger rounded-pill px-4 py-2 fw-semibold">
+                        <i class="bi bi-speedometer2 me-1"></i> เข้าสู่หน้าจัดการระบบหลังบ้าน
+                    </a>
+                    <div class="mt-2 text-secondary small">บัญชีทดสอบ: <strong>admin</strong> /
+                        <strong>admin123</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-3 border-top border-secondary border-opacity-25 text-center text-secondary small">
+                &copy; 2026 Japan Travel.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="data.js"></script>
+
+    <script>
+        let currentCategoryId = 0;
+        let currentKeyword = '';
+
+        const categories = getCategories();
+        let places = getPlaces();
+
+        const pillsContainer = document.getElementById('categoryPillsContainer');
+        const placesGrid = document.getElementById('placesGrid');
+        const placesCountText = document.getElementById('placesCountText');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const resetFilterBtn = document.getElementById('resetFilterBtn');
+
+        function renderCategoryPills() {
+            const currentPlaces = getPlaces();
+            let html = `
+            <div class="category-pill ${currentCategoryId === 0 ? 'active' : ''}" onclick="selectCategory(0)">
+                <i class="bi bi-grid-fill"></i>
+                <span>ทั้งหมด (${currentPlaces.length})</span>
+            </div>
+        `;
+
+            categories.forEach(cat => {
+                const count = currentPlaces.filter(p => p.category_id == cat.id).length;
+                html += `
+                <div class="category-pill ${currentCategoryId == cat.id ? 'active' : ''}" onclick="selectCategory(${cat.id})">
+                    <i class="bi ${cat.icon || 'bi-tag'}"></i>
+                    <span>${cat.name} (${count})</span>
+                </div>
+            `;
+            });
+
+            pillsContainer.innerHTML = html;
+        }
+
+        function renderPlaces() {
+            let filtered = getPlaces();
+
+            if (currentCategoryId > 0) {
+                filtered = filtered.filter(p => p.category_id == currentCategoryId);
+            }
+
+            if (currentKeyword.trim()) {
+                const kw = currentKeyword.toLowerCase();
+                filtered = filtered.filter(p =>
+                    p.name.toLowerCase().includes(kw) ||
+                    (p.name_jp && p.name_jp.toLowerCase().includes(kw)) ||
+                    p.prefecture.toLowerCase().includes(kw) ||
+                    (p.highlight && p.highlight.toLowerCase().includes(kw))
+                );
+            }
+
+            placesCountText.textContent = `พบทั้งหมด ${filtered.length} แหล่งท่องเที่ยวที่น่าประทับใจ`;
+            resetFilterBtn.style.display = (currentCategoryId > 0 || currentKeyword.trim()) ? 'inline-block' : 'none';
+
+            if (filtered.length === 0) {
+                placesGrid.innerHTML = `
+                <div class="col-12">
+                    <div class="card border-0 rounded-4 p-5 text-center bg-white shadow-sm my-4">
+                        <div class="text-danger mb-3" style="font-size: 3.5rem;">
+                            <i class="bi bi-compass"></i>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">ไม่พบสถานที่ท่องเที่ยวที่ตรงกับการค้นหา</h4>
+                        <p class="text-muted mb-4">ลองเปลี่ยนคำค้นหา หรือเลือกหมวดหมู่อื่นๆ</p>
+                        <div>
+                            <button onclick="resetFilter()" class="btn btn-danger rounded-pill px-4">ดูสถานที่ทั้งหมด</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+                return;
+            }
+
+            let cardsHtml = '';
+            filtered.forEach(place => {
+                const cat = categories.find(c => c.id == place.category_id) || { name: 'ท่องเที่ยว', icon: 'bi-geo-alt' };
+                cardsHtml += `
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="place-card">
+                        <div class="place-img-wrapper">
+                            <img src="${place.image}" alt="${place.name}">
+                            <div class="badge-rating">
+                                <i class="bi bi-star-fill text-warning"></i> ${(parseFloat(place.rating) || 5).toFixed(1)}
+                            </div>
+                            <div class="badge-cat-pill">
+                                <i class="bi ${cat.icon} text-danger me-1"></i>
+                                ${cat.name}
+                            </div>
+                        </div>
+
+                        <div class="place-card-body">
+                            <h5 class="place-title text-truncate" title="${place.name}">
+                                ${place.name}
+                            </h5>
+                            <div class="place-title-jp text-truncate">
+                                ${place.name_jp || 'Japan Destination'}
+                            </div>
+
+                            <div class="place-prefecture">
+                                <i class="bi bi-geo-alt-fill text-danger"></i>
+                                <span>${place.prefecture}</span>
+                            </div>
+
+                            <p class="place-highlight">
+                                ${place.highlight || place.description.substring(0, 75) + '...'}
+                            </p>
+
+                            <a href="place_detail.html?id=${place.id}" class="btn-view-detail">
+                                <span>ดูรายละเอียดสถานที่</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            });
+
+            placesGrid.innerHTML = cardsHtml;
+        }
+
+        function selectCategory(catId) {
+            currentCategoryId = catId;
+            renderCategoryPills();
+            renderPlaces();
+        }
+
+        function resetFilter() {
+            currentCategoryId = 0;
+            currentKeyword = '';
+            searchInput.value = '';
+            renderCategoryPills();
+            renderPlaces();
+        }
+
+        resetFilterBtn.addEventListener('click', resetFilter);
+
+        searchBtn.addEventListener('click', () => {
+            currentKeyword = searchInput.value;
+            renderPlaces();
+        });
+
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                currentKeyword = searchInput.value;
+                renderPlaces();
+            }
+        });
+
+        renderCategoryPills();
+        renderPlaces();
+
+        // ==========================================
+        // ระบบ Hero Banner Image Slider เลื่อนขวาไปซ้ายอัตโนมัติ
+        // ==========================================
+        function initHeroSlider() {
+            const track = document.getElementById('heroTrack');
+            if (!track) return;
+
+            // ดึงข้อมูลสถานที่ทั้งหมด (รองรับทั้งเชื่อมต่อ MySQL ผ่าน api.php หรือ fallback data.js)
+            const allPlaces = (typeof places !== 'undefined' && Array.isArray(places) && places.length > 0)
+                ? places
+                : (typeof getPlaces === 'function' ? getPlaces() : []);
+
+            const FALLBACK_IMG = 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1920&q=80';
+
+            // กรองสถานที่ที่มีภาพ พร้อมแปลง URL/พาธรูปภาพให้ถูกต้อง
+            const validSlides = [];
+            allPlaces.forEach(p => {
+                if (!p || !p.image || typeof p.image !== 'string') return;
+                const rawImg = p.image.trim();
+                if (!rawImg) return;
+
+                // รองรับทั้งรูปภาพ URL ภายนอก (http/https) และรูปภายในโปรเจกต์ (uploads/)
+                let finalImg = rawImg;
+                if (typeof fixImage === 'function') {
+                    finalImg = fixImage(rawImg);
+                } else if (!/^(https?:)?\/\//.test(rawImg) && rawImg.indexOf('/') === -1) {
+                    finalImg = 'uploads/' + rawImg;
+                }
+
+                validSlides.push({
+                    name: p.name || 'Japan Travel',
+                    image: finalImg
+                });
+            });
+
+            // กรณีไม่มีภาพ ให้แสดงภาพสำรองมาตรฐาน
+            if (validSlides.length === 0) {
+                validSlides.push({
+                    name: 'ภูเขาไฟฟูจิ (Mount Fuji)',
+                    image: FALLBACK_IMG
+                });
+            }
+
+            // ล้างเนื้อหาเดิมใน Track
+            track.innerHTML = '';
+
+            // สร้าง Element สไลด์สำหรับแต่ละภาพ
+            validSlides.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'hero-slide';
+                slide.innerHTML = `<img src="${item.image}" alt="${item.name}" loading="${index === 0 ? 'eager' : 'lazy'}" onerror="this.onerror=null; this.src='${FALLBACK_IMG}';">`;
+                track.appendChild(slide);
+            });
+
+            const totalOriginalSlides = validSlides.length;
+
+            // ถ้ามีภาพเพียงภาพเดียว ให้แสดงภาพนิ่งโดยไม่ต้องเริ่มการเลื่อนสไลด์
+            if (totalOriginalSlides <= 1) {
+                return;
+            }
+
+            // โคลนภาพแรกไปต่อท้ายเพื่อทำ Seamless Infinite Loop (เลื่อนขวาไปซ้ายวนรอบต่อเนื่องแบบไร้รอยต่อ)
+            const firstClone = track.children[0].cloneNode(true);
+            track.appendChild(firstClone);
+
+            let currentSlideIndex = 0;
+            let isMoving = false;
+            let slideTimer = null;
+            const SLIDE_INTERVAL = 5000;      // เลื่อนภาพทุกๆ 5 วินาที
+            const TRANSITION_DURATION = 1000; // ความเร็วของ Transition 1 วินาที (Smooth)
+
+            function moveToNextSlide() {
+                if (isMoving) return;
+                isMoving = true;
+                currentSlideIndex++;
+
+                // เลื่อนภาพจากขวาไปซ้ายด้วย Smooth Slide Transition
+                track.style.transition = `transform ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+                track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+
+                // เมื่อเลื่อนมาถึง Slide Clone ตัวสุดท้าย ให้ตัดกลับไปภาพแรกทันทีโดยไม่ให้เห็นการกระตุกกลับ
+                if (currentSlideIndex >= totalOriginalSlides) {
+                    setTimeout(() => {
+                        track.style.transition = 'none';
+                        currentSlideIndex = 0;
+                        track.style.transform = 'translateX(0)';
+                        void track.offsetHeight; // บังคับ browser reflow ทันที
+                        isMoving = false;
+                    }, TRANSITION_DURATION + 40);
+                } else {
+                    setTimeout(() => {
+                        isMoving = false;
+                    }, TRANSITION_DURATION + 40);
+                }
+            }
+
+            function startTimer() {
+                stopTimer();
+                slideTimer = setInterval(moveToNextSlide, SLIDE_INTERVAL);
+            }
+
+            function stopTimer() {
+                if (slideTimer) {
+                    clearInterval(slideTimer);
+                    slideTimer = null;
+                }
+            }
+
+            // เริ่มการทำงานของ Slider อัตโนมัติ
+            startTimer();
+
+            // หยุดทำงานชั่วคราวเมื่อผู้ใช้สลับแท็บไปหน้าอื่น และเริ่มใหม่เมื่อกลับมา
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    stopTimer();
+                } else {
+                    startTimer();
+                }
+            });
+        }
+
+        // เริ่มต้นการทำงานของ Hero Slider
+        initHeroSlider();
+    </script>
+
+</body>
+
+</html>
